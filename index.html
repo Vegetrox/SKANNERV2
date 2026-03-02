@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKANNER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Exo+2:wght@200;400;700;900&family=Rajdhani:wght@300;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="scanline"></div>
+
+<!-- WEATHER WIDGET COIN BAS DROITE -->
+<div id="wxWidget" onclick="toggleWx()" title="Cliquer pour voir les détails">
+  <div id="wxBody">
+    <div class="wx-err">⟳ &nbsp;ACQUISITION MÉTÉO...</div>
+  </div>
+</div>
+
+<!-- DRAWER PANNEAU LATÉRAL -->
+<div id="overlay" onclick="closeDrawer()"></div>
+<aside id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-source" id="drawerSource"></div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-preview" id="drawerPreview"></div>
+    <div class="drawer-details" id="drawerDetails"></div>
+    <div class="drawer-specs"   id="drawerSpecs"></div>
+  </div>
+  <div class="drawer-footer">
+    <a id="drawerLink" href="#" target="_blank" class="drawer-cta">
+      VOIR SUR LE SITE <span>↗</span>
+    </a>
+    <div class="drawer-engines" id="drawerEngines"></div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      SK<em>ANN</em>ER
+      <span class="logo-tag">MOTEUR DE RECHERCHE TECH</span>
+    </div>
+    <div class="hdr-right">
+      <span class="status-lbl">EN LIGNE</span>
+      <div class="dot-live"></div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">SYSTÈME D'ANALYSE TECH</div>
+    <div class="hero-title">
+      Trouvez les <strong>meilleurs prix</strong><br>
+      sur votre matériel informatique
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search-aura"></div>
+    <div class="search-inner">
+      <span class="search-ico">⌕</span>
+      <input type="text" id="q" placeholder="RTX 4090, Samsung 4K, SSD 2 To…" autocomplete="off">
+      <button class="search-btn" onclick="doSearch()">SCAN →</button>
+    </div>
+  </div>
+
+  <!-- ENGINES — clic filtre les 6 encarts -->
+  <div class="engines">
+    <button class="eng on" data-e="all"      onclick="pickEng(this)">TOUT</button>
+    <button class="eng"    data-e="google"   onclick="pickEng(this)">GOOGLE</button>
+    <button class="eng"    data-e="amazon"   onclick="pickEng(this)">AMAZON.FR</button>
+    <button class="eng"    data-e="ldlc"     onclick="pickEng(this)">LDLC</button>
+    <button class="eng"    data-e="materiel" onclick="pickEng(this)">MATERIEL.NET</button>
+    <button class="eng"    data-e="ebay"     onclick="pickEng(this)">EBAY.FR</button>
+    <button class="eng"    data-e="rdc"      onclick="pickEng(this)">RUE DU COMMERCE</button>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="cats-section">
+    <div class="section-lbl">CATÉGORIES TECH</div>
+    <div class="cats">
+      <button class="cat on"  data-c="all"   data-kw=""                    style="--cat-clr:var(--cyan)"   onclick="pickCat(this)"><span class="cat-ico">⊞</span> TOUT</button>
+      <button class="cat"     data-c="gpu"   data-kw="carte graphique GPU" style="--cat-clr:var(--pink)"   onclick="pickCat(this)"><span class="cat-ico">◈</span> GPU</button>
+      <button class="cat"     data-c="ecran" data-kw="écran moniteur 4K"   style="--cat-clr:var(--green)"  onclick="pickCat(this)"><span class="cat-ico">▭</span> ÉCRANS</button>
+      <button class="cat"     data-c="ssd"   data-kw="SSD disque dur NVMe" style="--cat-clr:var(--orange)" onclick="pickCat(this)"><span class="cat-ico">▪</span> STOCKAGE</button>
+      <button class="cat"     data-c="cpu"   data-kw="processeur CPU"      style="--cat-clr:var(--yellow)" onclick="pickCat(this)"><span class="cat-ico">◉</span> CPU</button>
+    </div>
+    <div class="qtags" id="qtags"></div>
+  </div>
+
+  <!-- 6 ENCARTS RÉSULTATS -->
+  <div class="res-section">
+    <div class="res-header">
+      <div class="res-count">SOURCES ACTIVES : <b id="rCount">–</b></div>
+      <div class="res-hint" id="resHint">← TAPEZ POUR SCANNER</div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <footer>
+    <span>SKANNER © 2025</span>
+    <span>MÉTÉO · OPEN-METEO &amp; OPENSTREETMAP</span>
+    <span>ALL SYSTEMS NOMINAL</span>
+  </footer>
+</div>
+
+<script src="meteo.js"></script>
+<script src="scrapper.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
